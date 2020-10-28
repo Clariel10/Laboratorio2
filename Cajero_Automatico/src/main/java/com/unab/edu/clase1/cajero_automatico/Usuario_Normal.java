@@ -27,6 +27,9 @@ public class Usuario_Normal extends javax.swing.JFrame {
      */
     public Usuario_Normal() {
         initComponents();
+        MostrarTabla();
+        calculartotal();
+        this.setLocationRelativeTo(null);
     }
     
     public static String fechaActual(){
@@ -35,6 +38,35 @@ public class Usuario_Normal extends javax.swing.JFrame {
         SimpleDateFormat formatoFecha = new SimpleDateFormat("dd/MM/YYYY");
         
         return formatoFecha.format(fecha);
+        
+    }
+    
+     void calculartotal(){
+        
+        String verificar;
+        Double totalAbono = 0.0;
+        Double totalCargo = 0.0;
+        Double TOTALFINAL = 0.0;        
+       
+        for (int i = 0; i < tbCuentas.getRowCount(); i++) {
+            verificar = String.valueOf(tbCuentas.getValueAt(i, 1));
+            
+            if(verificar.equals("Cargo")){
+                
+                totalCargo += Integer.parseInt(String.valueOf(tbCuentas.getValueAt(i, 0)));
+                
+            }
+            else if(verificar.equals("Abono")){
+                
+                totalAbono += Integer.parseInt(String.valueOf(tbCuentas.getValueAt(i, 0)));
+                
+            }
+//SI ES BONO SUMAR PODRAS UTILIZAR EL OPERADOR += PARA OPERAR DATOS 
+//SI ES CARGO RESTAR+= PARA OPERAR DATOS 
+            TOTALFINAL = totalAbono - totalCargo;
+        }
+        //DATO ACUMULADO PARA MOSTRAR 
+        lblTotalDisponible.setText(String.valueOf(TOTALFINAL)); 
         
     }
     
@@ -77,13 +109,13 @@ public class Usuario_Normal extends javax.swing.JFrame {
     private void initComponents() {
 
         jLabel3 = new javax.swing.JLabel();
-        txtMontoAbono = new javax.swing.JTextField();
-        btnEnviarAbono = new javax.swing.JButton();
+        txtMonto = new javax.swing.JTextField();
+        btnRetirarEfectivo = new javax.swing.JButton();
         jLabel4 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         tbCuentas = new javax.swing.JTable();
         jLabel5 = new javax.swing.JLabel();
-        jLabel6 = new javax.swing.JLabel();
+        lblTotalDisponible = new javax.swing.JLabel();
         lblIdUsuario = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -91,13 +123,13 @@ public class Usuario_Normal extends javax.swing.JFrame {
         jLabel3.setFont(new java.awt.Font("Century Gothic", 0, 18)); // NOI18N
         jLabel3.setText("Historial de movimientos");
 
-        txtMontoAbono.setFont(new java.awt.Font("Century Gothic", 0, 18)); // NOI18N
+        txtMonto.setFont(new java.awt.Font("Century Gothic", 0, 18)); // NOI18N
 
-        btnEnviarAbono.setFont(new java.awt.Font("Century Gothic", 1, 20)); // NOI18N
-        btnEnviarAbono.setText("Retirar Dinero");
-        btnEnviarAbono.addActionListener(new java.awt.event.ActionListener() {
+        btnRetirarEfectivo.setFont(new java.awt.Font("Century Gothic", 1, 20)); // NOI18N
+        btnRetirarEfectivo.setText("Retirar Dinero");
+        btnRetirarEfectivo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnEnviarAbonoActionPerformed(evt);
+                btnRetirarEfectivoActionPerformed(evt);
             }
         });
 
@@ -120,8 +152,8 @@ public class Usuario_Normal extends javax.swing.JFrame {
         jLabel5.setFont(new java.awt.Font("Century Gothic", 0, 18)); // NOI18N
         jLabel5.setText("Saldo Disponible:");
 
-        jLabel6.setFont(new java.awt.Font("Century Gothic", 1, 20)); // NOI18N
-        jLabel6.setText("0");
+        lblTotalDisponible.setFont(new java.awt.Font("Century Gothic", 1, 20)); // NOI18N
+        lblTotalDisponible.setText("0");
 
         lblIdUsuario.setText("jLabel1");
 
@@ -133,19 +165,19 @@ public class Usuario_Normal extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(152, 152, 152)
-                        .addComponent(txtMontoAbono, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(txtMonto, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(181, 181, 181)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel3)
-                            .addComponent(btnEnviarAbono, javax.swing.GroupLayout.PREFERRED_SIZE, 187, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(btnRetirarEfectivo, javax.swing.GroupLayout.PREFERRED_SIZE, 187, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(28, 28, 28)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jLabel5)
                                 .addGap(18, 18, 18)
-                                .addComponent(jLabel6))
+                                .addComponent(lblTotalDisponible))
                             .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 500, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                                 .addComponent(lblIdUsuario)
@@ -162,12 +194,12 @@ public class Usuario_Normal extends javax.swing.JFrame {
                     .addComponent(jLabel4)
                     .addComponent(lblIdUsuario))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(txtMontoAbono, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(txtMonto, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(28, 28, 28)
-                .addComponent(btnEnviarAbono, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btnRetirarEfectivo, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(36, 36, 36)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel6)
+                    .addComponent(lblTotalDisponible)
                     .addComponent(jLabel5))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 40, Short.MAX_VALUE)
                 .addComponent(jLabel3)
@@ -178,9 +210,9 @@ public class Usuario_Normal extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnEnviarAbonoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEnviarAbonoActionPerformed
+    private void btnRetirarEfectivoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRetirarEfectivoActionPerformed
         
-        int numero = Integer.parseInt(txtMontoAbono.getText());
+        int numero = Integer.parseInt(txtMonto.getText());
         
         if((numero%10==5)||(numero%10==0)){           
        
@@ -191,13 +223,15 @@ public class Usuario_Normal extends javax.swing.JFrame {
 
                 ClsCuenta_Usuario Cuentas = new ClsCuenta_Usuario();
                 Cuenta_Usuario cuenta = new Cuenta_Usuario();
-                cuenta.setSaldo(Double.parseDouble(txtMontoAbono.getText()));
+                cuenta.setSaldo(Double.parseDouble(txtMonto.getText()));
                 cuenta.setTransaccion(2);
                 cuenta.setFecha(date1);
                 cuenta.setIdUsuario(Integer.parseInt(lblIdUsuario.getText()));
                 Cuentas.AgregarTransaccion(cuenta);
                 MostrarTabla();
-                txtMontoAbono.setText("");
+                txtMonto.setText("");
+                calculartotal();
+                MostrarTabla();
         
             } catch (ParseException ex) {
                 System.out.println("Error de fecha");
@@ -210,7 +244,7 @@ public class Usuario_Normal extends javax.swing.JFrame {
         else{
             JOptionPane.showMessageDialog(null, "El numero ingresado no es multiplo de 5");
         }
-    }//GEN-LAST:event_btnEnviarAbonoActionPerformed
+    }//GEN-LAST:event_btnRetirarEfectivoActionPerformed
 
     /**
      * @param args the command line arguments
@@ -248,14 +282,14 @@ public class Usuario_Normal extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnEnviarAbono;
+    private javax.swing.JButton btnRetirarEfectivo;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
     private javax.swing.JScrollPane jScrollPane1;
     public javax.swing.JLabel lblIdUsuario;
+    private javax.swing.JLabel lblTotalDisponible;
     private javax.swing.JTable tbCuentas;
-    private javax.swing.JTextField txtMontoAbono;
+    private javax.swing.JTextField txtMonto;
     // End of variables declaration//GEN-END:variables
 }

@@ -27,6 +27,7 @@ public class Administrador extends javax.swing.JFrame {
     public Administrador() {
         initComponents();
         DisplayMember();
+        this.setLocationRelativeTo(null);
     }
     
      public static String fechaActual(){
@@ -39,6 +40,7 @@ public class Administrador extends javax.swing.JFrame {
     }
     
     String Valuemember[];
+    int contador = 0;
     
     void DisplayMember(){
         
@@ -50,7 +52,9 @@ public class Administrador extends javax.swing.JFrame {
         for (var iterarDatos : Usuarios){
             Filas[0] = String.valueOf(iterarDatos.getIdUsuario());
             Filas[1] = iterarDatos.getUsuario();
+            Valuemember [contador] = Filas[0];
             cbdefault.addElement(Filas[1]);
+            contador++;
                         
         }
       
@@ -152,7 +156,7 @@ public class Administrador extends javax.swing.JFrame {
                 cuenta.setSaldo(Double.parseDouble(txtMontoAbono.getText()));
                 cuenta.setTransaccion(2);
                 cuenta.setFecha(date1);
-                cuenta.setIdUsuario(Integer.parseInt(lblIdEncontrado.getText()));
+                cuenta.setIdUsuario(Integer.parseInt(Valuemember[cmbUsuarioAbonar.getSelectedIndex()]));
                 Cuentas.AgregarTransaccion(cuenta);               
                 txtMontoAbono.setText("");
                 

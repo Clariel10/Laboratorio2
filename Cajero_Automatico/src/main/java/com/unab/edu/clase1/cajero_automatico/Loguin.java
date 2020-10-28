@@ -25,11 +25,14 @@ public class Loguin extends javax.swing.JFrame {
     public Loguin() {
         initComponents();
         DisplayMember();
-    }
+        this.setLocationRelativeTo(null);
+    }   
+   
     
   
     
     String Valuemember[];
+    int contador = 0;
     
     void DisplayMember(){
         
@@ -41,7 +44,9 @@ public class Loguin extends javax.swing.JFrame {
         for (var iterarDatos : TipoUsuario){
             Filas[0] = String.valueOf(iterarDatos.getId());
             Filas[1] = iterarDatos.getTipoUser();
+            Valuemember [contador] = Filas[0];
             cbdefault.addElement(Filas[1]);
+            contador++;
                         
         }
       
@@ -151,12 +156,23 @@ public class Loguin extends javax.swing.JFrame {
         ClsUsuario est = new ClsUsuario();
         String user = txtUsuario.getText();
         String contra = txtContra.getText();
+        String cargocombo = Valuemember[cmbTipoUsuario.getSelectedIndex()];
+        int cargo = Integer.parseInt(cargocombo);
         
-        var variablecontenedor = est.LoguinUsuario(user, contra);
+        var variablecontenedor = est.LoguinUsuario(user, contra,cargo);
         
         if(variablecontenedor == true){
             
-           String usuario = txtUsuario.getText();
+           if(cargo==1){
+               
+               Administrador admin = new Administrador();
+               admin.setVisible(true);
+               
+           }
+           else if(cargo==2){
+               
+            est.frmuser.setVisible(true);
+           }
             
 //            frmDecision de = new frmDecision();
 //            de.show();
@@ -164,7 +180,7 @@ public class Loguin extends javax.swing.JFrame {
             
         }
         else{
-             JOptionPane.showMessageDialog(null, "Usuario o Password no validos");
+             JOptionPane.showMessageDialog(null, "Ocurrio un problema");
         }
     }//GEN-LAST:event_btnEntrarActionPerformed
 

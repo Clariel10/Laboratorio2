@@ -26,14 +26,15 @@ public class ClsUsuario {
     ConexionBD classconectar = new ConexionBD();
     Connection conectar = classconectar.RetornarConexion();
     
-   public boolean LoguinUsuario(String Usuario, String PASS){
+   public boolean LoguinUsuario(String Usuario, String PASS, int cargo){
         ArrayList <Usuario> ListaUsuarioPass = new ArrayList<>();
         
         try {
            
-            CallableStatement Statement = conectar.prepareCall("call SP_S_LOGUINUSUARIO(?,?)");
+            CallableStatement Statement = conectar.prepareCall("call SP_S_LOGUINUSUARIO(?,?,?)");
             Statement.setString("pusuario", Usuario);
             Statement.setString("ppass", PASS);
+            Statement.setInt("ptipousuario", cargo);
             ResultSet resultadoDeConsulta = Statement.executeQuery();
             
                 int id = resultadoDeConsulta.getInt("idUsuario");
@@ -48,20 +49,23 @@ public class ClsUsuario {
                 
                 es.setUsuario(resultadoDeConsulta.getString("Usuario"));
                 es.setPassword(resultadoDeConsulta.getString("PassWord"));
+                es.setTipoUsuario(resultadoDeConsulta.getInt("tipoUsuario"));
                 ListaUsuarioPass.add(es);
                 
             } 
             
             String UsuarioBD = null;
             String ContraBD = null;
+            int CargoBD = 0;
                 for(var iterador : ListaUsuarioPass){
                     
                 UsuarioBD = iterador.getUsuario();
                 ContraBD = iterador.getPassword();
+                CargoBD = iterador.getTipoUsuario();
                                     
             }
                 
-                if (UsuarioBD.equals(Usuario) && ContraBD.equals(PASS)){
+                if (UsuarioBD.equals(Usuario) && ContraBD.equals(PASS) && CargoBD==cargo){
                     return true;
                 }
                 conectar.close();
